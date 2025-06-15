@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mom's Emergency Card</title>
+    <script>
+      function updateDate() {
+        const date = new Date();
+        document.getElementById("date").innerText = date.toDateString();
+      }
+
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            position => {
+              const lat = position.coords.latitude;
+              const lon = position.coords.longitude;
+              const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
+              const link = document.getElementById("locationLink");
+              link.href = mapUrl;
+              link.innerText = "View Current Location";
+            },
+            () => {
+              document.getElementById("locationLink").innerText = "Location not available";
+            }
+          );
+        } else {
+          document.getElementById("locationLink").innerText = "Geolocation not supported";
+        }
+      }
+
+      window.onload = () => {
+        updateDate();
+        getLocation();
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 text-white font-mono min-h-screen flex items-center justify-center p-6">
+    <div class="bg-gray-800 border-4 border-white shadow-[6px_6px_0_0_#fff] p-6 rounded-xl w-full max-w-md">
+      <h1 class="text-3xl font-bold mb-2">Mumma</h1>
+      
+      <p class="text-md text-gray-300 mb-4">This card has all the info needed in case of emergency.</p>
+      <div class="mb-4">
+        <h2 class="text-lg font-bold underline">Emergency Contacts:</h2>
+        <ul class="list-disc ml-5 mt-2">
+          <li><a href="tel:+917405070406" class="underline text-blue-400">Dishant: 7405070406</a></li>
+          <li><a href="tel:+919712792510" class="underline text-blue-400">Haard: 9712792510</a></li>
+          <!-- <li><a href="tel:+919876543212" class="underline text-blue-400">Dr. Sharma: +91-9876543212</a></li> -->
+        </ul>
+      </div>
+
+      <div class="mb-4">
+        <h2 class="text-lg font-bold underline">Live Location:</h2>
+        <a id="locationLink" href="#" class="text-blue-300 underline">Fetching location...</a>
+      </div>
+
+      <div class="mb-4">
+        <h2 class="text-lg font-bold underline">Today's Date:</h2>
+        <p id="date" class="mt-1">Loading...</p>
+      </div>
+
+      <div class="mt-6 p-4 bg-pink-700 border-2 border-white rounded-lg shadow-inner">
+        <p class="text-center text-lg font-semibold">I love you, Mom. Always. 💖</p>
+      </div>
+    </div>
+  </body>
+</html>
